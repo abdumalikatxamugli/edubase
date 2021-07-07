@@ -17,6 +17,14 @@ use App\Orchid\Screens\User\UserListScreen;
 use App\Orchid\Screens\User\UserProfileScreen;
 use Illuminate\Support\Facades\Route;
 use Tabuna\Breadcrumbs\Trail;
+use App\Orchid\Screens\StudentList;
+use App\Orchid\Screens\StudentEdit;
+use App\Orchid\Screens\TeacherList;
+use App\Orchid\Screens\TeacherEdit;
+use App\Orchid\Screens\GroupList;
+use App\Orchid\Screens\AttendanceMake;
+
+use App\Orchid\Screens\GroupStudentsScreen;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,54 +50,54 @@ Route::screen('profile', UserProfileScreen::class)
             ->push(__('Profile'), route('platform.profile'));
     });
 
-// Platform > System > Users
-Route::screen('users/{user}/edit', UserEditScreen::class)
-    ->name('platform.systems.users.edit');
+// // Platform > System > Users
+// Route::screen('users/{user}/edit', UserEditScreen::class)
+//     ->name('platform.systems.users.edit');
 
-// Platform > System > Users > Create
-Route::screen('users/create', UserEditScreen::class)
-    ->name('platform.systems.users.create')
-    ->breadcrumbs(function (Trail $trail) {
-        return $trail
-            ->parent('platform.systems.users')
-            ->push(__('Create'), route('platform.systems.users.create'));
-    });
+// // Platform > System > Users > Create
+// Route::screen('users/create', UserEditScreen::class)
+//     ->name('platform.systems.users.create')
+//     ->breadcrumbs(function (Trail $trail) {
+//         return $trail
+//             ->parent('platform.systems.users')
+//             ->push(__('Create'), route('platform.systems.users.create'));
+//     });
 
-// Platform > System > Users > User
-Route::screen('users', UserListScreen::class)
-    ->name('platform.systems.users')
-    ->breadcrumbs(function (Trail $trail) {
-        return $trail
-            ->parent('platform.index')
-            ->push(__('Users'), route('platform.systems.users'));
-    });
+// // Platform > System > Users > User
+// Route::screen('users', UserListScreen::class)
+//     ->name('platform.systems.users')
+//     ->breadcrumbs(function (Trail $trail) {
+//         return $trail
+//             ->parent('platform.index')
+//             ->push(__('Users'), route('platform.systems.users'));
+//     });
 
-// Platform > System > Roles > Role
-Route::screen('roles/{roles}/edit', RoleEditScreen::class)
-    ->name('platform.systems.roles.edit')
-    ->breadcrumbs(function (Trail $trail, $role) {
-        return $trail
-            ->parent('platform.systems.roles')
-            ->push(__('Role'), route('platform.systems.roles.edit', $role));
-    });
+// // Platform > System > Roles > Role
+// Route::screen('roles/{roles}/edit', RoleEditScreen::class)
+//     ->name('platform.systems.roles.edit')
+//     ->breadcrumbs(function (Trail $trail, $role) {
+//         return $trail
+//             ->parent('platform.systems.roles')
+//             ->push(__('Role'), route('platform.systems.roles.edit', $role));
+//     });
 
-// Platform > System > Roles > Create
-Route::screen('roles/create', RoleEditScreen::class)
-    ->name('platform.systems.roles.create')
-    ->breadcrumbs(function (Trail $trail) {
-        return $trail
-            ->parent('platform.systems.roles')
-            ->push(__('Create'), route('platform.systems.roles.create'));
-    });
+// // Platform > System > Roles > Create
+// Route::screen('roles/create', RoleEditScreen::class)
+//     ->name('platform.systems.roles.create')
+//     ->breadcrumbs(function (Trail $trail) {
+//         return $trail
+//             ->parent('platform.systems.roles')
+//             ->push(__('Create'), route('platform.systems.roles.create'));
+//     });
 
-// Platform > System > Roles
-Route::screen('roles', RoleListScreen::class)
-    ->name('platform.systems.roles')
-    ->breadcrumbs(function (Trail $trail) {
-        return $trail
-            ->parent('platform.index')
-            ->push(__('Roles'), route('platform.systems.roles'));
-    });
+// // Platform > System > Roles
+// Route::screen('roles', RoleListScreen::class)
+//     ->name('platform.systems.roles')
+//     ->breadcrumbs(function (Trail $trail) {
+//         return $trail
+//             ->parent('platform.index')
+//             ->push(__('Roles'), route('platform.systems.roles'));
+//     });
 
 // Example...
 Route::screen('example', ExampleScreen::class)
@@ -100,11 +108,22 @@ Route::screen('example', ExampleScreen::class)
             ->push(__('Example screen'));
     });
 
-Route::screen('example-fields', ExampleFieldsScreen::class)->name('platform.example.fields');
-Route::screen('example-layouts', ExampleLayoutsScreen::class)->name('platform.example.layouts');
-Route::screen('example-charts', ExampleChartsScreen::class)->name('platform.example.charts');
-Route::screen('example-editors', ExampleTextEditorsScreen::class)->name('platform.example.editors');
-Route::screen('example-cards', ExampleCardsScreen::class)->name('platform.example.cards');
-Route::screen('example-advanced', ExampleFieldsAdvancedScreen::class)->name('platform.example.advanced');
+// Route::screen('example-fields', ExampleFieldsScreen::class)->name('platform.example.fields');
+// Route::screen('example-layouts', ExampleLayoutsScreen::class)->name('platform.example.layouts');
+// Route::screen('example-charts', ExampleChartsScreen::class)->name('platform.example.charts');
+// Route::screen('example-editors', ExampleTextEditorsScreen::class)->name('platform.example.editors');
+// Route::screen('example-cards', ExampleCardsScreen::class)->name('platform.example.cards');
+// Route::screen('example-advanced', ExampleFieldsAdvancedScreen::class)->name('platform.example.advanced');
 
 //Route::screen('idea', 'Idea::class','platform.screens.idea');
+
+
+Route::screen('students', StudentList::class)->name('students.list');
+Route::screen('student/{student?}', StudentEdit::class)->name('student.create_or_edit');
+
+Route::screen('teachers', TeacherList::class)->name('teachers.list');
+Route::screen('teacher/{teacher?}', TeacherEdit::class)->name('teachers.edit');
+
+Route::screen('groups', GroupList::class)->name('groups.list');
+Route::screen('groups/{group}', GroupStudentsScreen::class)->name('group.students');
+Route::screen('groups/attendance/{group}', AttendanceMake::class)->name('group.attendance');
